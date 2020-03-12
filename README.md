@@ -1,90 +1,145 @@
-# ![] Project 3 - Classifying Reddit Posts
+# Exploration of US healthcare spend
 
 ---
 
-## Problem Statement
+## Executive Summary
 
-Given students' changing attitudes on unethical behaviors, and given corporations' increasingly-rigorous job applicant screening processes, are models based on natural language processing sophisticated enough to distinguish the linguistic nuances between ethical, unethical, and illegal behaviors posted online?  Could these models be the basis for more sophiticated job screeing tools in the future, and therefore put already ethically at-risk students at even more more of a disadvantage for employment. What are the implications and actions for educators?
+Few issues in the United States stir up as much emotion, controversy, and debate as US healthcare. Hailed as one of the best in the world it is also derided for its high costs.  high level exploration of US healthcare spend on two issues concerning healthcare costs:
+
+> 1) One of the common perceptions about the rise in US healthcare costs is concerning the role of Medicare, the federal health insurance for people 65 or older and people with disabilities. Often the perception is that when Medicare pays less for a procdure, the hospital must raise the costs for thrid party insurers to make up the difference.  Is this true?  What is the correlation, if any, between Medicare payments and overall payments for medical procedures?
+
+> 2) Politicians are often reluctant to address healthcare costs not just because of how it persnally affects every citizen, but also because the healthcare sector as a whole often represents big business and one of the largest employers in their district.  Could political lobbying be an influencer?  What is the correlation, if any, of lobbying spend and overall charges and payment for healthcare?
+
+The goal was explore historic data on US healthcare costs and healthcare lobbying funding and determine if there were any correlations to the data using the Pearson correlation coefficient.
+
+#### Initial results
+
+Regarding issue 1) the role of Medicare:
+
+- On the whole, for the entire United States there is a positive correlation of between Medicare payments and payments by all providers.  This means that Medicare payments, though on average lower than third party payments, move in sync with thrid party payments, i.e. if Medicare payments go down, then all payments go down. This would contradict common perceptions.  BUT the data also yielded a very high p-value to accept this correlation. Driving this uncertatinty is the role of each US state and costs associated with differing procedures.
+(corr = 0.346708747027121, p-value = 0.44613798155651485)
+
+Regarding issue 2) the role of lobbying:
+
+- On a whole, BOTH lobbying for health issues and the amount hospitals charge for procedures have increased over time. For our analysis from 2011 - 2017 there is a strong correlation between the two, with a significanlty low pvalue to accept this correlation.
+Entire US: (corr = 0.7577422665439904, pvalue = 0.048453539473213396)
+
+- additional commentary on individual states.
 
 ---
 
-## Executive  Summary
 
-A recent study by professors at California State University, San Marcos and San Francisco State University, found that students' who were more open to cheating at school also were more open to unethical behavior later on in their jobs and careers. In addition, the study found that 'group-oriented' students had a more relaxed attitude toward cheating than more 'individualistic' students. (1)
-
-A report by Career Builder.com found that up to 70% of businesses use social media as a screening tool for job applicants and new hires.(2)  Top reasons for job denial include: 
-- Provocative/inappropriate content, photos, videos = 40%
-- Alcohol and drug use = 36%
-- Descrimination againse race,gender, religion = 31%
-- Illegal and criminal behavior = 30%
-
-Is machine learning sophisticated enough to distinguish linguistic nuances between ethical, unethical, and illegal behaviors posted online and how does this affect students and educators?
-
-A high-level study was conducted on Reddit posts spanning the 'Life Pro Tip' , the 'Unethical Life Pro Tip', and the 'Illegal Life Pro Tip' subreddit groups using the following modelling techniques to determine the predictive capabilities of machine learning. 
-- CountVectorizer / TfidfVectorizer
-- Logistic Regression
-- Naïve Bayes: Binomial/ Multinomial
-- Support Vector
-- Decision Tree
+ 
 
 ---
 
-## Data  Dictionary
+## Notebook contents
 
-Online posts sraped from following subreddits:
-- LifeProTips='https://www.reddit.com/r/LifeProTips.json'
-- UnethicalLifeProTips='https://www.reddit.com/r/UnethicalLifeProTips.json'
-- IllegalLifePro Tips='https://www.reddit.com/r/IllegalLifeProTips.json'
+RIGHT NOW everything is in one notebook , but will be separated...
 
-|Feature|Type|Subreddit/dataset|Description|
+Notebook: Data 
+
+- describe ...
+
+Notebook : EDA
+
+- describe ...
+
+---
+
+## Data sources
+
+Raw data is sourced from the following sites:
+
+### 1. Inpatient charge data
+
+Source: https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Inpatient2017
+
+This data set provides the charges and payments of healthcare procedures for the years 2011-2017 for more than 3,000 U.S. hospitals.  Charges are for 100 common diagnoses in years 2011-2013 and for 560 common diagnoses for years 2014-2017.  Each year consisted of 160k-200k rows of data.
+
+|Column|Type|Dataset|Description|
 |---|---|---|---|
-|title|string |Regular'Ethical'/Unethical/Illegal Life Pro Tips|Title of the post|
-|selftext|string|Ethical/Unethical/Illegal|Body of the text|
-|subreddit|string/int|Ethical/Unethical/Illegal|Identifier for specific subreddit|
-|author|string|Ethical/Unethical/Illegal|Author of post|
-|num_comments|int|Ethical/Unethical/Illegal|Number of comments per post|
-|score|int|Ethical/Unethical/illegal|Score (thumbs up) per post|
-|is_self|string|Ethical/Unethical/Illegal|Reddit indicatro of type of post|
-|created_UTC/timestamp|date/time|Ethical/Unethical/Illegal|Timestamps for post|
+|DRG Definition|string |Inpatient charge data|Code and description of diagnosis|
+|Provider Id|int|Inpatient charge data|Id assigned to Medicare-certified facility|
+|Provider Name|string|Inpatient charge data|Name of provider/ facility|
+|Provider Street Address|string|Inpatient charge data|Provider address|
+|Provider City|string|Inpatient charge data|City where provider is located|
+|Provider State|string|Inpatient charge data|State where the provider is located|
+|Provider Zip Code|int|Inpatient charge data|Zip where the provider is located|
+|Hospital Referral Region|string|Inpatient charge data|Region where the provider is located|
+|Total Discharges|int|Inpatient charge data|Number of patientsbilled by the provider|
+|Average Covered Charges|float|Inpatient charge data|What the provider charges for that DRG/ diagnosis|
+|Average Total Payments|float|Inpatient charge data|Average total payments for the DRG. Also included in average total payments are co-payment and deductible amounts that the patient is responsible for and any additional payments by third parties for coordination of benefits|
+|Average Medicare Payments|float|Inpatient charge data|Average amount that Medicare pays to the provider for Medicare's share of the DRG|
+
+
+### 2. United States Senate Lobby Disclosure Act reports
+
+Source: https://www.senate.gov/legislative/Public_Disclosure/LDA_reports.htm
+
+This data set was collected from the US Senate Lobby Disclosure Act (LDA) database.  The LDA database was queried on 'Health Issues' and individual US states.  The data provides lobbyist funding for 50 states from 1999-2019.  Data for each US state ranged from 1000 to 13,000 entries.
+
+|Column|Type|Dataset|Description|
+|---|---|---|---|
+|State|string|LDA Report|State where client is located|
+|Registrant Name|string|LDA Reports|Name of registrant/ lobbyist|
+|Client Name|string|LDA Reports|Name client|
+|Filing Type|string|LDA Reports|Type of report/ reporting period|
+|Amount Reported|float|LDA Reports|Amount of funds client sent thru lobbyist|
+|Date Posted|string|LDA Reports|Date report posted|
+|Filing Year|int|LDA Reports|Filing year|
+
+
+### 3. United States census data
+
+Source: https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
+
+Provides population of 50 states from the 2010 census.
+
+|Column|Type|Dataset|Description|
+|---|---|---|---|
+|State|string|US Census population|US State|
+|Population|int| US Census Population|Population for that US state|
+
+---
+### Data assumptions and limitations
+
+List the assumptions and limitations here:
+
+- Inpatient charge data only for US hospitals which recieve US Medicare payments.  Private or military hospitals, clinics, and facilities not included.
+- Inpalient charge data for 2011 - 2013 recorded for 100 common diagnoses, 2014-2017 for 560 diagnoses.  Not all US hospitals/ states registered all these diagnoses.  Healthcare spend based on 93 common procedures.
+- US lobbying information is base on US Senate LDA database.  
+- list more here. ...
+- list
 
 
 ---
 
 ## Results
 
-Three sets of data were run:
-- Data 1 = Predicting Unethical vs Ethical posts
-- Data 2 = Predicting Illegal vs Unethical posts
-- Data 3 = Predicting Illegal vs Ethical posts
+What is the correlation between ...
 
-Overall results concerning all 3 data sets:
-- Titles more accurate than selftext
-- Tvec more accurate than Cvec
-- Stopwords not an influence - even when creating custom stopword list
-- LogReg most accurate model!
-- Multinomial Naïve Bayes slightly less accuracy than LogReg but consistently higher Specificity
-- Support Vector similar accuracy to LogReg, but with higher overfit and HUGE Time/CPU cost.
-- Decision Tree (even with up to 90 levels) ran surprisingly quickly, but had slightly less accuracy than LogReg and had the highest overfit.
 
-Results for best fit models:
 
-|Dataset|Reddit|Baseline|Best model|Results|
-|---|---|---|---|---|
-|Data1|Unethical vs Ethical|54%|Tvec and LogReg| Accuracy 78%|
-|Data2|Illegal vs Unethical| 52%| Tvec and LogReg|Accuracy 76%|
-|Data3|Illegal vs Ethical|52%|Tvec and LogReg|Accuracy 90%|
+
 
 ---
 
 ## Conclusions and Recommendations
 
-Simple modeling yields reasonable accuracy in predicting if a post and its associated behavior can be categorized as unethical or illegal.  More data sourced, additional feature engineering, and more modelling tecniques will increase accuracy.  It is reasonable to assume employers are capable of screening students and new job candidates based on machine learning nuanced language.
+Discuss conclusions here.
 
-Recommendations:
-- Expand on current study to : ensure modelling accuracy, and to refine how online groups influence students’ ‘collectivism’
-- Advise University Career Services to enact stricter guidance to graduating students about cleaning and maintaining social profiles.
-- Approach University staff to urge more overall education in Ethics.  Ethics is standard study for many disciplines, medical, legal, business, theology.  Increased education in ethics at an earlier stage can begin to curb unhealthy attitudes toward scholastic cheating.
+Recommendations will be for more future work.
 
 
-(1)https://www.sciencedaily.com/releases/2019/11/191127121235.htm
-(2)https://www.cnbc.com/2018/08/10/digital-dirt-may-nix-that-job-you-were-counting-on-getting.html
+---
+
+## References
+
+- https://www.bostonglobe.com/metro/2019/02/02/healthcare-industry-tops-list-state-lobbyist-expenses/bTvc7YWp7Ign2LB6ZaQDRN/story.html
+- https://www.healthcaredive.com/news/myth-diagnosis-do-hospitals-charge-more-to-make-up-for-low-government-pay/560021/
+- https://www.healthsystemtracker.org/chart-collection/u-s-spending-healthcare-changed-time/#item-nhe-trends_total-national-health-expenditures-us-billions-1970-2018
+- https://www.nytimes.com/2019/05/09/health/hospitals-prices-medicare.html
+- https://www.healthcaredive.com/news/hospital-lobbying-in-2018-by-the-numbers/548262/
+- https://www.senate.gov/legislative/Public_Disclosure/LDA_reports.htm
+- https://factfinder.census.gov/faces/nav/jsf/pages/guided_search.xhtml
