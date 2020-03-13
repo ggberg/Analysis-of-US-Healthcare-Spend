@@ -4,7 +4,7 @@
 
 ## Executive Summary
 
-Few issues in the United States stir up as much emotion, controversy, and debate as US healthcare. Hailed as one of the best in the world it is also derided for its high costs.  high level exploration of US healthcare spend on two issues concerning healthcare costs:
+Few issues in the United States stir up as much emotion, controversy, and debate as US healthcare. Hailed as one of the best in the world it is also derided for its high costs.  We propose to conduct a high level exploration of US healthcare spend on two issues concerning healthcare costs:
 
 > 1) One of the common perceptions about the rise in US healthcare costs is concerning the role of Medicare, the federal health insurance for people 65 or older and people with disabilities. Often the perception is that when Medicare pays less for a procdure, the hospital must raise the costs for thrid party insurers to make up the difference.  Is this true?  What is the correlation, if any, between Medicare payments and overall payments for medical procedures?
 
@@ -17,12 +17,12 @@ The goal was explore historic data on US healthcare costs and healthcare lobbyin
 Regarding issue 1) the role of Medicare:
 
 - On the whole, for the entire United States there is a positive correlation of between Medicare payments and payments by all providers.  This means that Medicare payments, though on average lower than third party payments, move in sync with thrid party payments, i.e. if Medicare payments go down, then all payments go down. This would contradict common perceptions.  BUT the data also yielded a very high p-value to accept this correlation. Driving this uncertatinty is the role of each US state and costs associated with differing procedures.
-(corr = 0.346708747027121, p-value = 0.44613798155651485)
+(0.6238128288078792, 0.1343761207827625)
 
 Regarding issue 2) the role of lobbying:
 
-- On a whole, BOTH lobbying for health issues and the amount hospitals charge for procedures have increased over time. For our analysis from 2011 - 2017 there is a strong correlation between the two, with a significanlty low pvalue to accept this correlation.
-Entire US: (corr = 0.7577422665439904, pvalue = 0.048453539473213396)
+- On a whole, BOTH lobbying for health issues and the amount hospitals charge for procedures have increased over time. For our analysis from 2011 - 2017 there is a strong correlation between the two.
+Entire US: (0.6472017179539473, 0.11610124607018191)
 
 - additional commentary on individual states.
 
